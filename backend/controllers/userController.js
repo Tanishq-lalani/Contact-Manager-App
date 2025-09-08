@@ -1,0 +1,70 @@
+const express = require("express")
+const asynchandler = require("express-async-handler")
+const User = require('../models/userModel')
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+
+
+const loginUser = asynchandler(async (req,res) =>{
+      const {email,password} = req.body;
+      if(!email || !password){
+        res.status(400)
+        res.json({message: "All Details are Mandatory"})
+      }
+      // finding the user by unique email
+      const user = User.findOne({ email })
+      // comparing hash password with the password
+      const result = bcrypt.compare(password,user.password)
+      // jwt used to provide authentication
+      if(user && result){
+        res.status(200)
+        const accesstoken = jwt.sign({
+        user:{
+            name: user.name,
+            email: user.email,
+            id: user.id,
+        },
+      },process.env.PRIVATE_SECRET_KEY , {expiresIn: "1h"}
+    )
+    res.json({accesstoken})
+    }else{
+        res.status(400)
+        res.json({message: "invalid password"})
+      }
+     
+          
+})
+
+
+const registerUser = asynchandler(async (req,res) =>{
+    const {name, email, password} = req.body;
+    if(!name || !email || !password){
+        res.status(400)
+        res.json({message: "Please Enter the Details"})
+    }
+    //hash password
+    const hashPassword = await bcrypt.hash(password,10)
+    const user = User.create({
+        name,
+        email,
+        password: hashPassword,
+    })
+    res.json({_id: user.id, email: user.email})
+})
+
+
+const currentUser = asynchandler(async (req,res) =>{
+    res.json(req.user)
+})
+
+
+
+
+
+
+
+
+
+
+
+module.exports = {loginUser,currentUser,registerUser}

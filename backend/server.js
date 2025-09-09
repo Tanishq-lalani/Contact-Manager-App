@@ -2,10 +2,17 @@ const express = require('express')
 const connectDb = require('./config/mongoDb')
 const app = express()
 const dotenv = require('dotenv').config()
+const cors = require("cors")
+
+
 
 connectDb()
 const port = process.env.PORT || 4000
-
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET","POST","PUT", "DELETE"],
+    credentials: true,
+}))
 
 app.use(express.json())
 app.use('/api/user', require("./routes/userRoutes"))

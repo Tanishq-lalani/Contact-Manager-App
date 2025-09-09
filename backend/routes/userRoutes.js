@@ -5,8 +5,8 @@ const validateToken = require("../middlewares/validateToken")
 
 router.post("/login", loginUser)
 router.post("/register", registerUser)
-router.get("/current", validateToken, currentUser)
+router.get("/current", validateToken, currentUser) 
 
 
 
-module.exports =  router
+module.exports =  router  

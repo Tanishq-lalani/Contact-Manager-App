@@ -5,26 +5,32 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Navbar from './components/Navbar'
+import Register from './pages/Register'
 function App() {
   const [count, setCount] = useState(0)
   const token = localStorage.getItem("token")
 
   return (
     <>
-      <Routes>
-       {!token ? (<>
+    
+       {!token ? (
+       <Routes>
           <Route path='/login' element={<Login/>}/>
-       </>) : 
+          <Route path='/register' element={<Register/>}/>
+          <Route path="*" element={<Login />}/>
+          </Routes>
+        ) : 
       (
         <>
-         <Navbar/>
-           
-          
-         <Footer/>
+        <Navbar/>
+        <Routes>
+
+        </Routes>
+
+        <Footer/>
         </>
       )}
-
-      </Routes>
+         
     </>
   )
 }

@@ -16,6 +16,7 @@ app.use(cors({
 
 app.use(express.json())
 app.use('/api/user', require("./routes/userRoutes"))
+app.use('/api/contact', require('./routes/contactRoutes'))
 
 app.listen(port, ()=>{
     console.log("Port is running in:", port)

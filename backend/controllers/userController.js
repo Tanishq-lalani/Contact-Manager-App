@@ -12,9 +12,9 @@ const loginUser = asynchandler(async (req,res) =>{
         res.json({message: "All Details are Mandatory"})
       }
       // finding the user by unique email
-      const user = User.findOne({ email })
+      const user = await User.findOne({ email })
       // comparing hash password with the password
-      const result = bcrypt.compare(password,user.password)
+      const result = await bcrypt.compare(password,user.password)
       // jwt used to provide authentication
       if(user && result){
         res.status(200)

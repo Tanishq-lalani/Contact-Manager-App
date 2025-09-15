@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-
+import axiosInstance from '../axiosInstance'
 const Register = () => {
   const navigate = useNavigate()
   const [name, setName] = useState("")
@@ -14,7 +14,7 @@ const Register = () => {
   const handleRegister = async (e) =>{
     e.preventDefault()
     try {
-      const res = await axios.post("http://localhost:8080/api/user/register",{
+      const res = await axiosInstance.post("http://localhost:8080/api/user/register",{
       name,
       email,
       password

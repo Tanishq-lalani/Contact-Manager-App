@@ -8,8 +8,7 @@ const jwt = require("jsonwebtoken")
 const loginUser = asynchandler(async (req,res) =>{
       const {email,password} = req.body;
       if(!email || !password){
-        res.status(400)
-        res.json({message: "All Details are Mandatory"})
+        return res.status(400).json({message: "All Details are Mandatory"})
       }
       // finding the user by unique email
       const user = await User.findOne({ email })
@@ -17,16 +16,15 @@ const loginUser = asynchandler(async (req,res) =>{
       const result = await bcrypt.compare(password,user.password)
       // jwt used to provide authentication
       if(user && result){
-        res.status(200)
         const accesstoken = jwt.sign({
         user:{
             name: user.name,
             email: user.email,
             id: user.id,
         },
-      },process.env.PRIVATE_SECRET_KEY , {expiresIn: "1h"}
+      },process.env.PRIVATE_SECRET_KEY ,{ expiresIn: "1h" }
     )
-    res.json({accesstoken})
+     return res.json({accesstoken})
     }else{
         res.status(400)
         res.json({message: "invalid password"})

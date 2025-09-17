@@ -16,7 +16,6 @@ const Contact = () => {
     const [phoneNo, setPhoneNo] = useState()
     const navigate = useNavigate()
     const token = localStorage.getItem("token")
-    console.log(token) 
     if(!token) return window.location.href="/login"
     const createContact = async(e)=>{
         e.preventDefault()

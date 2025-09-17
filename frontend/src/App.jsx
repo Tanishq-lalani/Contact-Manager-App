@@ -10,7 +10,9 @@ import Footer from './components/Footer'
 import Contact from './pages/Contact'
 import Profile from './pages/Profile'
 import AllContacts from './pages/AllContacts'
-import { useAuth } from './context/AuthContext'
+import Contact_Profile from './pages/Contact_Profile'
+import EditContact from './pages/EditContact'
+
 
 
 
@@ -34,6 +36,8 @@ function App() {
             <Route path='/' element={<AllContacts/>}/>
             <Route path='/createNew' element={<Contact/>}/>
             <Route path='/userProfile' element={<Profile/>}/>
+            <Route path='/contact/:id' element={<Contact_Profile/>}/>
+            <Route path='/edit/:id' element={<EditContact/>}/>
         </Routes>
 
         <Footer/>
